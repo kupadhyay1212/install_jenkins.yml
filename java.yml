@@ -1,0 +1,10 @@
+--
+- hosts: host2
+  become: true
+  become_method: sudo
+  tasks:
+  - name: Install Java 8 CentOS 7
+    yum: name=java-1.8.0-openjdk state=present
+
+  - name: Create a Java 8 directory
+    file: path=/home/ansible state=directory owner=ansible group=ansible
