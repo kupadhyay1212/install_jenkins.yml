@@ -15,3 +15,5 @@
       dest: /usr/share/nginx/html/index.html
       content: |
          Nginx by ansible
+#  - name: remove nginx-more
+#    yum: name=nginx-more state=absent
