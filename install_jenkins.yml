@@ -1,3 +1,37 @@
+###with firewalld stop
+---
+- hosts: ham-digital
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Install Java 8 CentOS 7
+      yum: name=java-1.8.0-openjdk state=present
+      ignore_errors: true
+    - name: Ensure Jenkins Repository is Installed
+      yum_repository:
+        name: jenkins
+        state: present
+        description: Official Jenkins Yum Repo
+        baseurl: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+    - name: Ensure Jenkins key
+      shell: rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+      ignore_errors: true
+
+    - name: Upgrade all packages
+      yum: name=* state=latest
+      ignore_errors: true
+
+    - name: Ensure Jenkins is Installed
+      yum : name=jenkins state=present
+    - name: Enable and Start the Jenkins Service
+      service: name=jenkins state=started enabled=yes
+      ignore_errors: true
+
+
+
+######with firewall start###
+
 ---
 - hosts: jenkins
   roles:
